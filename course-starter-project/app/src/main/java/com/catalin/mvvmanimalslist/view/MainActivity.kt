@@ -2,6 +2,7 @@ package com.catalin.mvvmanimalslist.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import com.catalin.mvvmanimalslist.R
 import dagger.hilt.android.AndroidEntryPoint
 

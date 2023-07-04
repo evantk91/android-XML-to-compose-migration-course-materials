@@ -32,10 +32,19 @@ class AnimalListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAnimalListBinding.inflate(inflater, container, false)
+            .apply {
+                listComposeView.setContent {
+                    ListFragmentComposable(
+                        vm = mainViewModel,
+                        buttonClick = { mainViewModel.getAnimals() },
+                        animalOnClick = clickCallback
+                    )
+                }
+            }
         context ?: return binding.root
 
 //        setupUI(binding)
-        setupObservables(binding)
+//        setupObservables(binding)
 
         return binding.root
     }
@@ -56,14 +65,14 @@ class AnimalListFragment : Fragment() {
 //        }
 //    }
 
-    private fun setupObservables(binding: FragmentAnimalListBinding) {
-        mainViewModel.result.observe(viewLifecycleOwner) { result ->
-            binding.listComposeView.setContent {
-                ListFragmentComposable(
-                    result = result,
-                    buttonClick = { mainViewModel.getAnimals() },
-                    animalOnClick = clickCallback)
-            }
-        }
-    }
+//    private fun setupObservables(binding: FragmentAnimalListBinding) {
+//        mainViewModel.result.observe(viewLifecycleOwner) { result ->
+//            binding.listComposeView.setContent {
+//                ListFragmentComposable(
+//                    result = result,
+//                    buttonClick = { mainViewModel.getAnimals() },
+//                    animalOnClick = clickCallback)
+//            }
+//        }
+//    }
 }

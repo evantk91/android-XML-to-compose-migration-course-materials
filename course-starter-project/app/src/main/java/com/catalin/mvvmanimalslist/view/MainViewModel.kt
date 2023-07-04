@@ -1,5 +1,6 @@
 package com.catalin.mvvmanimalslist.view
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.catalin.mvvmanimalslist.api.AnimalRepo
@@ -14,11 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repo: AnimalRepo) : ViewModel() {
 
-    val result = MutableLiveData<NetworkResult<List<Animal>>>()
+//    val result = MutableLiveData<NetworkResult<List<Animal>>>()
+    var result = mutableStateOf<NetworkResult<List<Animal>>>(NetworkResult.Initial())
 
-    init {
-        result.value = NetworkResult.Initial()
-    }
+//    init {
+//        result.value = NetworkResult.Initial()
+//    }
 
     fun getAnimals() {
         result.value = NetworkResult.Loading()

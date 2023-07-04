@@ -30,7 +30,7 @@ import com.catalin.mvvmanimalslist.model.Animal
 
 @Composable
 fun ListFragmentComposable(
-    result: NetworkResult<List<Animal>>,
+    vm: MainViewModel,
     buttonClick: () -> Unit,
     animalOnClick: (animal: Animal) -> Unit
 ) {
@@ -39,7 +39,7 @@ fun ListFragmentComposable(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        when(result) {
+        when(vm.result.value) {
             is NetworkResult.Initial -> {
                 val btnText = stringResource(id = R.string.btn_fetch_animals)
                 Button(onClick = buttonClick) {
@@ -50,10 +50,10 @@ fun ListFragmentComposable(
                 CircularProgressIndicator()
             }
             is NetworkResult.Error -> {
-                Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, vm.result.value.message, Toast.LENGTH_SHORT).show()
             }
             is NetworkResult.Success -> {
-                val animals = result.data ?: listOf()
+                val animals = vm.result.value.data ?: listOf()
                 LazyColumn {
                     items(animals) { animal ->
                         Row(

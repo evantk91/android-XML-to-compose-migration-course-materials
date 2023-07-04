@@ -18,6 +18,7 @@ import com.catalin.mvvmanimalslist.R
 import com.catalin.mvvmanimalslist.api.AnimalService
 import com.catalin.mvvmanimalslist.databinding.FragmentAnimalDetailBinding
 import com.catalin.mvvmanimalslist.model.Animal
+import com.catalin.mvvmanimalslist.ui.theme.Purple700
 
 
 class AnimalDetailFragment : Fragment() {
@@ -65,7 +66,7 @@ fun AnimalDetails(animal: Animal) {
     val textSize = dimensionResource(id = R.dimen.std_text).value.sp
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = animal.name ?: "", fontSize = titleSize, fontWeight = FontWeight.Bold)
+        Text(text = animal.name ?: "", fontSize = titleSize, fontWeight = FontWeight.Bold, color = Purple700)
         Text(text = stringResource(id = R.string.detail_location, animal.location ?: ""), fontSize = textSize)
         Text(text = stringResource(id = R.string.detail_lifespan, animal.lifespan ?: ""), fontSize = textSize)
         Text(text = stringResource(id = R.string.detail_diet, animal.diet ?: ""), fontSize = textSize)

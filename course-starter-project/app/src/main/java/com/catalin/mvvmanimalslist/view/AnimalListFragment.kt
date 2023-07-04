@@ -34,55 +34,35 @@ class AnimalListFragment : Fragment() {
         val binding = FragmentAnimalListBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        setupUI(binding)
+//        setupUI(binding)
         setupObservables(binding)
 
         return binding.root
     }
 
-    private fun setupUI(binding: FragmentAnimalListBinding) {
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        binding.recyclerView.run {
-            addItemDecoration(
-                DividerItemDecoration(
-                    binding.recyclerView.context,
-                    (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
-                )
-            )
-        }
-        binding.recyclerView.adapter = adapter
-        binding.buttonFetchAnimals.setOnClickListener {
-            mainViewModel.getAnimals()
-        }
-    }
+//    private fun setupUI(binding: FragmentAnimalListBinding) {
+//        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+//        binding.recyclerView.run {
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    binding.recyclerView.context,
+//                    (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
+//                )
+//            )
+//        }
+//        binding.recyclerView.adapter = adapter
+//        binding.buttonFetchAnimals.setOnClickListener {
+//            mainViewModel.getAnimals()
+//        }
+//    }
 
     private fun setupObservables(binding: FragmentAnimalListBinding) {
         mainViewModel.result.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is NetworkResult.Initial -> {
-                    binding.buttonFetchAnimals.visibility = View.VISIBLE
-                    binding.progressBar.visibility = View.GONE
-                    binding.recyclerView.visibility = View.GONE
-                }
-                is NetworkResult.Loading -> {
-                    binding.buttonFetchAnimals.visibility = View.GONE
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.recyclerView.visibility = View.GONE
-                }
-                is NetworkResult.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.buttonFetchAnimals.visibility = View.VISIBLE
-                    binding.recyclerView.visibility = View.GONE
-                    Toast.makeText(this.context, result.message, Toast.LENGTH_SHORT).show()
-                }
-                is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.buttonFetchAnimals.visibility = View.GONE
-                    binding.recyclerView.visibility = View.VISIBLE
-                    result.data?.let {
-                        adapter.newAnimals(it)
-                    }
-                }
+            binding.listComposeView.setContent {
+                ListFragmentComposable(
+                    result = result,
+                    buttonClick = { mainViewModel.getAnimals() },
+                    animalOnClick = clickCallback)
             }
         }
     }

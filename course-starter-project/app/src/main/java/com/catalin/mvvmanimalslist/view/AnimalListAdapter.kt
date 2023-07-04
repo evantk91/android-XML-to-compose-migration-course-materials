@@ -64,12 +64,3 @@ class AnimalListAdapter(
     override fun getItemCount() = animals.size
 }
 
-@Composable
-fun ComposeAnimalImage(url: String) {
-    AsyncImage(
-        model = url,
-        contentDescription = null,
-        modifier = Modifier.padding(4.dp),
-        contentScale = ContentScale.Crop
-    )
-}

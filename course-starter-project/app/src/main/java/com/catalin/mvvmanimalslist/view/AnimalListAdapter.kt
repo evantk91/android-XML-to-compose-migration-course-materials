@@ -2,8 +2,14 @@ package com.catalin.mvvmanimalslist.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
 import com.catalin.mvvmanimalslist.R
 import com.catalin.mvvmanimalslist.api.AnimalService
@@ -30,10 +36,13 @@ class AnimalListAdapter(
         fun bind(animal: Animal) {
             binding.animalName.text = animal.name
             binding.animalLocation.text = animal.location
-            val url = AnimalService.BASE_URL + animal.image
-            Glide.with(binding.animalImage.context)
-                .load(url)
-                .into(binding.animalImage)
+//            Glide.with(binding.animalImage.context)
+//                .load(url)
+//                .into(binding.animalImage)
+            binding.composeAnimalImage.setContent {
+                val url = AnimalService.BASE_URL + animal.image
+                ComposeAnimalImage(url = url)
+            }
             binding.animalItem.setOnClickListener {
                 clickCallback(animal)
             }
@@ -53,4 +62,14 @@ class AnimalListAdapter(
     }
 
     override fun getItemCount() = animals.size
+}
+
+@Composable
+fun ComposeAnimalImage(url: String) {
+    AsyncImage(
+        model = url,
+        contentDescription = null,
+        modifier = Modifier.padding(4.dp),
+        contentScale = ContentScale.Crop
+    )
 }

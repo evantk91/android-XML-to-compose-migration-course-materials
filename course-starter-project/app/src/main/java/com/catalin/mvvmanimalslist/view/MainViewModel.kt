@@ -41,4 +41,14 @@ class MainViewModel @Inject constructor(private val repo: AnimalRepo) : ViewMode
             })
     }
 
+    fun getAnimal(name: String): Animal? {
+        val animals = result.value.data
+        animals?.let {
+            val filtered = it.filter { animal -> animal.name == name }
+            if (filtered.isNotEmpty())
+                return filtered[0]
+        }
+        return null
+    }
+
 }

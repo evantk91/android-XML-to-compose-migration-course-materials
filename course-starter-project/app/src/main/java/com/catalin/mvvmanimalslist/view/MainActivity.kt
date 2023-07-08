@@ -1,7 +1,6 @@
 package com.catalin.mvvmanimalslist.view
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -12,13 +11,10 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.catalin.mvvmanimalslist.R
-import com.catalin.mvvmanimalslist.databinding.ActivityMainBinding
 import com.catalin.mvvmanimalslist.model.Animal
 import com.catalin.mvvmanimalslist.ui.theme.AnimalListTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,11 +29,6 @@ sealed class Destination (val route: String) {
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//    }
-
     private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-//                    AnimalListFragmentComposable()
                     val navController = rememberNavController()
                     NavigationAppHost(navController = navController, vm = mainViewModel)
                 }
@@ -89,9 +79,4 @@ fun NavigationAppHost(navController: NavHostController, vm: MainViewModel) {
             }
         }
     }
-}
-
-@Composable
-fun AnimalListFragmentComposable() {
-    AndroidViewBinding(ActivityMainBinding::inflate)
 }

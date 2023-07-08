@@ -1,7 +1,6 @@
 package com.catalin.mvvmanimalslist.view
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.catalin.mvvmanimalslist.api.AnimalRepo
 import com.catalin.mvvmanimalslist.api.NetworkResult
